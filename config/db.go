@@ -8,9 +8,9 @@ import (
 
 	"database/sql"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/hashicorp/vault/api"
@@ -32,31 +32,12 @@ var httpClient = &http.Client{
 
 //Vclient ...
 var Vclient, _ = api.NewClient(&api.Config{Address: "http://127.0.0.1:8200", HttpClient: httpClient})
-var tokenPath = "/var/run/secrets/kubernetes.io/serviceaccount/token"
-var K8sAuthRole = "vault_go_demo"
-var K8sAuthPath = "auth/kubernetes/login"
 
 func init() {
-	//Vault
-	//K8s
-	fmt.Printf("Vault client init\n")
-	buf, err := ioutil.ReadFile(tokenPath)
-	if err != nil {
-		log.Fatal(err)
-	}
-	jwt := string(buf)
-	fmt.Printf("K8s Service Account JWT: %v", jwt)
 
-	config := map[string]interface{}{
-		"jwt":  jwt,
-		"role": K8sAuthRole,
-	}
-
-	secret, err1 := Vclient.Logical().Write(K8sAuthPath, config)
-	if err1 != nil {
-		log.Fatal(err)
-	}
-	token := secret.Auth.ClientToken
+	token := os.Getenv("VAULT_TOKEN")
+	fmt.Printf("Starting Vault Authentication\n")
+	fmt.Printf("\nVAULT_TOKEN: %v\n", token)
 
 	//Local
 	// token := "password"
@@ -103,7 +84,7 @@ func init() {
 
 }
 
-// Create Table vault-go-demo (
+// Create Table vault-go-demo-nomad (
 // 	CUST_NO SERIAL PRIMARY KEY,
 // 	FIRST               TEXT NOT NULL,
 // 	LAST                TEXT NOT NULL,
