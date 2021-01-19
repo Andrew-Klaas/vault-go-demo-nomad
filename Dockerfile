@@ -8,8 +8,6 @@ RUN go get github.com/hashicorp/vault/api
 RUN go get github.com/lib/pq
 RUN go install /go/src/github.com/Andrew-Klaas/vault-go-demo-nomad
 
-
-# Run the outyet command by default when the container starts.
 ENTRYPOINT /go/bin/vault-go-demo-nomad
 
 # Document that the service listens on port 9090
