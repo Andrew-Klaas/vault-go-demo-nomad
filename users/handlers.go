@@ -13,8 +13,6 @@ import (
 
 //Index ...
 func Index(w http.ResponseWriter, req *http.Request) {
-
-	fmt.Printf("username: %v, password %v\n", config.AppDBuser.Username, config.AppDBuser.Password)
 	err := config.TPL.ExecuteTemplate(w, "index.gohtml", config.AppDBuser)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
