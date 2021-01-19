@@ -31,7 +31,8 @@ var httpClient = &http.Client{
 }
 
 //Vclient ...
-var Vclient, _ = api.NewClient(&api.Config{Address: "http://127.0.0.1:8200", HttpClient: httpClient})
+//TODO: change to consul connect localhost
+var Vclient, _ = api.NewClient(&api.Config{Address: "http://vault.service.consul:8200", HttpClient: httpClient})
 
 func init() {
 
