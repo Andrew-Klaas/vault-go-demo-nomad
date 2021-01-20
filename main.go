@@ -19,6 +19,6 @@ func main() {
 
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 
-	log.Println("Listening on port 9090...")
-	http.ListenAndServe(":9090", nil)
+	log.Println("Listening on port 7070...")
+	http.ListenAndServe(":7070", nil)
 }
